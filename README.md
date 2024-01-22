@@ -3,7 +3,6 @@ This program is exercise of C language. It has a main program and tree subprogra
 subprograms:
 
 **1.menu:**
-    1.write to file. 2. read file 3. quit program
   
 **2.file writing subprogram**
 
