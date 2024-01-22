@@ -1,49 +1,37 @@
-/*Tee ohjelma, jossa on pääohjelman lisäksi kolme aliohjelmaa – 
-yksi valikkoa varten, toinen tiedoston kirjoittamiseen ja kolmas lukemiseen. 
-Tiedostoa kirjoittava aliohjelma kysyy käyttäjältä nimiä 
-ja lisää ne tiedostoon siellä aiemmin olevien nimien jatkoksi. 
-Tiedostoa lukeva aliohjelma avaa tiedoston, lukee nimet ja tulostaa ne näytölle riveittäin. 
-Tee valikko ohjelman pyörittämiseen 
-ja käytä valikon toteuttamiseen if, else-if, else -rakennetta. 
-Ohjelma kysyy alussa käsiteltävän tiedoston nimen ja välitä sen parametrina aliohjelmiin. 
-Käyttäjältä kysyttävien nimien maksimipituus on 48 merkkiä, 
-tee sitä varten ohjelmaan oma vakio. 
-Muista laittaa tiedostonkäsittelyihin virheenkäsittely.*/
-
 #include <stdio.h>
 #include <stdlib.h>
 #include <string.h>
 
 #define MAX_PITUUS 48
 
-// ALIOHJELMA VALIKON NÄYTTÄMISEEN
+// SUBPROGRAM FOR MENU
 void nayta_valikko() {
-    printf("Valitse alla olevista valinnoista\n");
-    printf("1) Lisää uusi nimi\n");
-    printf("2) Tulosta nimet\n");
-    printf("0) Lopeta\n");
-    printf("Anna valintasi: ");
+    printf("Choose one option in below\n");
+    printf("1) Add name to file\n");
+    printf("2) Print file\n");
+    printf("0) Quit\n");
+    printf("Provide your choice: ");
 }
 
-// ALIOHJELMA TIEDOSTON KIRJOITTAMISEEN.
+// SUBPROGRAM FOR WRITING IN FILE
 
 void kirjoita_tiedostoon(char tiedostoNimi[100], char *nimi){
 
     FILE *tiedosto;
     tiedosto=fopen(tiedostoNimi,"a");
     if (tiedosto == NULL){
-        printf("Tiedoston avaaminen epäonnistui, lopetetaan: No such file or directory\n");
+        printf("Opening file failed, quitting: No such file or directory\n");
         exit(0);
     }
     else {
         fprintf(tiedosto, "%s\n", nimi);
-        printf("Nimi lisätty tiedostoon.\n");
+        printf("Name added to file.\n");
     }    
         fclose(tiedosto);
 
 }
 
-//  ALIOHJELMA TIEDOSTON LUKEMISEEN JA TULOSTAMISEEN.
+//  SUBPROGRAM FOR READING AND PRINTING FILE
 void lue_tiedosto(char *tiedostoNimi){
     FILE *tiedosto;
     tiedosto = fopen(tiedostoNimi, "r");
@@ -53,12 +41,12 @@ void lue_tiedosto(char *tiedostoNimi){
     }
     else{
         char nimi[MAX_PITUUS];
-        printf("Tiedostossa olevat nimet:\n");
+        printf("File content:\n");
 
         while(fgets(nimi, sizeof(nimi), tiedosto)){
         printf("%s", nimi);
         }
-        printf("Tiedosto luettu ja tulostettu.\n");
+        printf("File read and printed.\n");
     }
     fclose(tiedosto);
 }
@@ -69,8 +57,8 @@ int main(){
     char tiedostoNimi[100];
     char nimi[MAX_PITUUS];
 
-    printf("Tämä ohjelma lisää nimiä tiedostoon ja lukee ne.");
-    printf("\nAnna käsiteltävän tiedoston nimi:");
+    printf("This program adds names to file and reads it.");
+    printf("\nProvide the name of the file to be processed:");
     scanf(" %s", tiedostoNimi);
     
 
@@ -79,7 +67,7 @@ int main(){
         scanf("%d", &valinta);
         
         if(valinta == 1){
-            printf("Anna lisättävä nimi: ");
+            printf("Provide name to add: ");
             scanf("%s", nimi); 
             kirjoita_tiedostoon(tiedostoNimi, nimi);
         }
@@ -87,11 +75,11 @@ int main(){
             lue_tiedosto(tiedostoNimi);
         }
         else if(valinta == 0){
-            printf("Kiitos ohjelman käytöstä.\n");
+            printf("Thank you for using this program.\n");
             break;
         }
         else{
-            printf("Virheellinen valinta. Yritä uudestaan.\n");
+            printf("Error occured. Try again.\n");
         }
     }
 
